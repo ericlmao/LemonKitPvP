@@ -33,7 +33,8 @@ public final class LemonKitPvP extends JavaPlugin {
                 new PlayerDropListener(),
                 new PlayerJoinListener(),
                 new PlayerChatListener(),
-                new RefillCrystalListener()
+                new RefillCrystalListener(),
+                new PlayerSaturationListener()
         );
     }
 

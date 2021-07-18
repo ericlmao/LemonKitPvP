@@ -30,6 +30,8 @@ public class RomanNumeral {
     }
 
     public static String convert(int number) {
+        if (number == 0)
+            return "";
         int l = map.floorKey(number);
         if (number == l)
             return map.get(number);

@@ -1,6 +1,8 @@
 package dev.negativekb.lemonkitpvp.core.structure;
 
 import lombok.Data;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -21,5 +23,9 @@ public class KitPvPPlayer {
 
     public double getKDR() {
         return (double) kills / (double) deaths;
+    }
+
+    public Player getPlayer() {
+        return Bukkit.getPlayer(getUuid());
     }
 }

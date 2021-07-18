@@ -106,6 +106,15 @@ public class Clan {
             upgrades.put(upgrade.getName(), level);
     }
 
+    public int getUpgradeLevel(ClanUpgrade upgrade) {
+        Map.Entry<String, Integer> entry = getUpgrades().entrySet()
+                .stream()
+                .filter(stringIntegerEntry -> stringIntegerEntry.getKey().equalsIgnoreCase(upgrade.getName()))
+                .findFirst().orElse(null);
+
+        return (entry == null ? 0 : entry.getValue());
+    }
+
     public int getNextUpgradeLevel(ClanUpgrade upgrade) {
         Map.Entry<String, Integer> e = getUpgrades()
                 .entrySet()

@@ -7,6 +7,7 @@ import dev.negativekb.lemonkitpvp.commands.clans.subcommands.leader.SubDisband;
 import dev.negativekb.lemonkitpvp.commands.clans.subcommands.leader.SubTransfer;
 import dev.negativekb.lemonkitpvp.commands.clans.subcommands.staff.SubForceDisband;
 import dev.negativekb.lemonkitpvp.commands.clans.subcommands.staff.SubSetStats;
+import dev.negativekb.lemonkitpvp.commands.clans.subcommands.upgrades.SubUpgrades;
 import dev.negativekb.lemonkitpvp.core.api.command.Command;
 import dev.negativekb.lemonkitpvp.core.api.command.annotation.CommandInfo;
 import dev.negativekb.lemonkitpvp.core.data.ClanManager;
@@ -15,10 +16,12 @@ import dev.negativekb.lemonkitpvp.core.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CommandInfo(name = "clans", aliases = {"clan", "team", "teams", "group", "groups", "faction", "f", "gang", "gangs"})
 public class CommandClans extends Command {
@@ -36,6 +39,7 @@ public class CommandClans extends Command {
                 new SubTransfer(),
                 new SubKick(),
                 new SubSetRank(),
+                new SubUpgrades(),
                 // Admin Commands
                 new SubForceDisband(),
                 new SubSetStats()
@@ -48,16 +52,18 @@ public class CommandClans extends Command {
                 if (sender.hasPermission("kitpvp.admin"))
                     list.addAll(Arrays.asList("forcedisband", "setstats"));
 
-                list.addAll(Arrays.asList("create", "disband", "join", "leave", "members", "stats", "invite", "uninvite", "transfer", "kick"));
+                list.addAll(Arrays.asList("create", "disband", "join", "leave", "members", "stats", "invite", "uninvite", "transfer", "kick", "upgrades"));
 
-                return list;
+                String lastWord = args[args.length - 1];
+                return list.stream().filter(s -> StringUtil.startsWithIgnoreCase(s, lastWord)).collect(Collectors.toList());
             }
 
             if (is(args[0], "stats", "join", "invite", "uninvite")
                     || (sender.hasPermission("kitpvp.admin") && is(args[0], "forcedisband"))) {
                 List<String> list = new ArrayList<>();
                 ClanManager.getInstance().getClans().forEach(clan -> list.add(clan.getName()));
-                return list;
+                String lastWord = args[args.length - 1];
+                return list.stream().filter(s -> StringUtil.startsWithIgnoreCase(s, lastWord)).collect(Collectors.toList());
             }
 
             if (is(args[0], "kick", "transfer")) {
@@ -67,7 +73,8 @@ public class CommandClans extends Command {
 
                 List<String> list = new ArrayList<>();
                 clan.getMembers().forEach((uuid, s) -> list.add(Bukkit.getOfflinePlayer(uuid).getName()));
-                return list;
+                String lastWord = args[args.length - 1];
+                return list.stream().filter(s -> StringUtil.startsWithIgnoreCase(s, lastWord)).collect(Collectors.toList());
             }
 
             if (is(args[0], "setrank")) {
@@ -80,7 +87,8 @@ public class CommandClans extends Command {
 
                 List<String> list = new ArrayList<>();
                 clan.getMembers().forEach((uuid, s) -> list.add(Bukkit.getOfflinePlayer(uuid).getName()));
-                return list;
+                String lastWord = args[args.length - 1];
+                return list.stream().filter(s -> StringUtil.startsWithIgnoreCase(s, lastWord)).collect(Collectors.toList());
             }
 
             return null;

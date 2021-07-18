@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -80,6 +81,11 @@ public class RefillCrystalListener implements Listener {
     public void onHit(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof EnderCrystal))
             return;
+
+        if (event.getDamager() instanceof Projectile) {
+            event.setCancelled(true);
+            return;
+        }
 
         if (!(event.getDamager() instanceof Player))
             return;

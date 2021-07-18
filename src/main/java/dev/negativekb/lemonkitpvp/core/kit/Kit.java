@@ -1,6 +1,7 @@
 package dev.negativekb.lemonkitpvp.core.kit;
 
 import dev.negativekb.lemonkitpvp.LemonKitPvP;
+import dev.negativekb.lemonkitpvp.core.data.KitPvPPlayerManager;
 import dev.negativekb.lemonkitpvp.core.util.ItemBuilder;
 import dev.negativekb.lemonkitpvp.core.util.UtilPlayer;
 import lombok.Getter;
@@ -62,6 +63,7 @@ public abstract class Kit implements Listener {
     public abstract ItemStack getIcon();
 
     public void applyKit(Player player) {
+        KitPvPPlayerManager.getInstance().getPlayerByPlayer(player).setKit(getKitType().getAlias());
         UtilPlayer.reset(player);
 
         PlayerInventory inv = player.getInventory();
@@ -80,10 +82,7 @@ public abstract class Kit implements Listener {
 
 
         ItemStack healing = new ItemBuilder(Material.POTION).setDurability((short) 16421).build();
-
-        for (int i = 0; i < 36; i++) {
-            inv.setItem(i, healing);
-        }
+        UtilPlayer.fillInventory(player, healing);
 
         if (!kitContents().isEmpty() || kitContents() != null)
             kitContents().forEach(inv::setItem);
