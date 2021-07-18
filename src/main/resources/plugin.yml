@@ -1,0 +1,7 @@
+name: LemonKitPvP
+version: ${project.version}
+main: dev.negativekb.lemonkitpvp.LemonKitPvP
+
+depend:
+  - WorldEdit
+  - WorldGuard
