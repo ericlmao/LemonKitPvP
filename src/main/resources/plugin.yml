@@ -5,3 +5,4 @@ main: dev.negativekb.lemonkitpvp.LemonKitPvP
 depend:
   - WorldEdit
   - WorldGuard
+  - PlaceholderAPI
