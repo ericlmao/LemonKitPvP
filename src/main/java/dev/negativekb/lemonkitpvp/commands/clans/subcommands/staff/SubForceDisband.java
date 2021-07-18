@@ -7,8 +7,6 @@ import dev.negativekb.lemonkitpvp.core.structure.clans.Clan;
 import dev.negativekb.lemonkitpvp.core.util.Message;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
-
 @CommandInfo(name = "forcedisband", permission = "kitpvp.admin")
 public class SubForceDisband extends SubCommand {
     @Override

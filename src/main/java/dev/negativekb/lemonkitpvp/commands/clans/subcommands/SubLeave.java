@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 public class SubLeave extends SubCommand {
 
     private final ClanManager manager;
+
     public SubLeave() {
         manager = ClanManager.getInstance();
     }

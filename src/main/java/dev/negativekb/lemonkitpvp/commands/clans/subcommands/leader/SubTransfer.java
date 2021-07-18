@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 public class SubTransfer extends SubCommand {
 
     private final ClanManager manager;
+
     public SubTransfer() {
         manager = ClanManager.getInstance();
     }

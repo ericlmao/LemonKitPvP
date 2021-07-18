@@ -13,6 +13,7 @@ import java.util.UUID;
 @CommandInfo(name = "join", playerOnly = true)
 public class SubJoin extends SubCommand {
     private final ClanManager manager;
+
     public SubJoin() {
         manager = ClanManager.getInstance();
     }

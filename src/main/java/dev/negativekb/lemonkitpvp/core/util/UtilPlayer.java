@@ -7,6 +7,8 @@ import lombok.experimental.UtilityClass;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
@@ -41,6 +43,13 @@ public class UtilPlayer {
             player.leaveVehicle();
         if (player.getPassenger() != null)
             player.getPassenger().leaveVehicle();
+    }
+
+    public void fillInventory(Player player, ItemStack itemStack) {
+        PlayerInventory inventory = player.getInventory();
+        for (int i = 0; i < inventory.getSize(); i++) {
+            inventory.addItem(itemStack);
+        }
     }
 
     /**

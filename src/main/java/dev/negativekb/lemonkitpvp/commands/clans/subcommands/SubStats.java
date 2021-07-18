@@ -44,10 +44,10 @@ public class SubStats extends SubCommand {
                 " ",
                 "&f&m------------------------------"
         )
-        .replace("%kills%", clan.getKills())
-        .replace("%deaths%", clan.getDeaths())
-        .replace("%kdr%", (double) clan.getKills() / (double) clan.getDeaths())
-        .send(player);
+                .replace("%kills%", clan.getKills())
+                .replace("%deaths%", clan.getDeaths())
+                .replace("%kdr%", (double) clan.getKills() / (double) clan.getDeaths())
+                .send(player);
     }
 
 }

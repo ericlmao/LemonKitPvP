@@ -66,10 +66,8 @@ public class SubUnInvite extends SubCommand {
         ClanRank rank = clan.getMemberRank(player.getUniqueId());
         // Kinda dirty code, could find a better way to do this maybe
         // Required to be Mod+
-        if (rank == null || rank == ClanRank.RECRUIT || rank == ClanRank.MEMBER)
-            return false;
+        return rank != null && rank != ClanRank.RECRUIT && rank != ClanRank.MEMBER;
 
         // Any other circumstance needed?
-        return true;
     }
 }

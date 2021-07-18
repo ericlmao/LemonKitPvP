@@ -7,12 +7,11 @@ import dev.negativekb.lemonkitpvp.core.structure.clans.Clan;
 import dev.negativekb.lemonkitpvp.core.util.Message;
 import org.bukkit.command.CommandSender;
 
-import java.lang.reflect.Member;
-
 @CommandInfo(name = "setstats", permission = "kitpvp.admin")
 public class SubSetStats extends SubCommand {
 
     private final ClanManager manager;
+
     public SubSetStats() {
         this.manager = ClanManager.getInstance();
 

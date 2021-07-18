@@ -14,6 +14,7 @@ public class SubDisband extends SubCommand {
 
 
     private final ClanManager manager;
+
     public SubDisband() {
         this.manager = ClanManager.getInstance();
     }

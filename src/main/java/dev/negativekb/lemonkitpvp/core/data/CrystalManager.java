@@ -3,10 +3,11 @@ package dev.negativekb.lemonkitpvp.core.data;
 import com.google.gson.Gson;
 import dev.negativekb.lemonkitpvp.LemonKitPvP;
 import dev.negativekb.lemonkitpvp.core.structure.RefillCrystal;
-import dev.negativekb.lemonkitpvp.core.structure.clans.Clan;
 import lombok.Getter;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -24,17 +25,18 @@ public class CrystalManager {
     private static CrystalManager instance;
     private final String dataPath;
     private final Gson gson;
-
-    @Getter
-    private ArrayList<RefillCrystal> refillCrystals = new ArrayList<>();
     @Getter
     private final HashMap<RefillCrystal, EnderCrystal> entityMap = new HashMap<>();
+    @Getter
+    private final HashMap<RefillCrystal, ArrayList<ArmorStand>> hologramMap = new HashMap<>();
+    @Getter
+    private ArrayList<RefillCrystal> refillCrystals = new ArrayList<>();
 
     public CrystalManager() {
         instance = this;
         gson = new Gson();
         LemonKitPvP plugin = LemonKitPvP.getInstance();
-        this.dataPath = plugin.getDataFolder().getAbsolutePath() + "/clans.json";
+        this.dataPath = plugin.getDataFolder().getAbsolutePath() + "/crystals.json";
 
         try {
             load();
@@ -79,7 +81,10 @@ public class CrystalManager {
     }
 
     public void createRefillCrystal(Location location) {
-        RefillCrystal crystal = new RefillCrystal(UUID.randomUUID(), location.getWorld().toString(), location.getX(), location.getY(), location.getZ());
+        RefillCrystal crystal = new RefillCrystal(UUID.randomUUID(),
+                location.getWorld().getName(), (location.getX() + 0.5),
+                (location.getY() + 0.5), (location.getZ() + 0.5));
+
         refillCrystals.add(crystal);
     }
 
@@ -94,7 +99,42 @@ public class CrystalManager {
             Entity c = world.spawnEntity(location, EntityType.ENDER_CRYSTAL);
             EnderCrystal ender = (EnderCrystal) c;
             entityMap.put(crystal, ender);
+
+            Location l = location.clone();
+            l.add(0, 0.5, 0);
+
+            ArmorStand line1 = create(l, "&d&lRefill Crystal");
+            ArmorStand line2 = create(l.subtract(0, 0.3, 0), "&6&lClick to Refill!");
+            ArmorStand line3 = create(l.subtract(0, 0.3, 0), "&7(60 second cooldown)");
+
+            ArrayList<ArmorStand> hologram = new ArrayList<>();
+            hologram.add(line1);
+            hologram.add(line2);
+            hologram.add(line3);
+
+            hologramMap.put(crystal, hologram);
         });
+    }
+
+    private ArmorStand create(Location location, String text) {
+        ArmorStand entity = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+        entity.setVisible(false);
+        entity.setGravity(false);
+        entity.setCustomName(translate(translate(text)));
+        entity.setCustomNameVisible(true);
+
+        return entity;
+    }
+
+    private String translate(String s) {
+        return ChatColor.translateAlternateColorCodes('&', s);
+    }
+
+    public void removeCrystals() {
+        getHologramMap().forEach((crystal, armorStands) -> armorStands.forEach(Entity::remove));
+        getHologramMap().clear();
+        getEntityMap().forEach((crystal, enderCrystal) -> enderCrystal.remove());
+        getEntityMap().clear();
     }
 
     private class Timer extends BukkitRunnable {

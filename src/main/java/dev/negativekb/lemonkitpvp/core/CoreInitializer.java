@@ -2,6 +2,7 @@ package dev.negativekb.lemonkitpvp.core;
 
 import dev.negativekb.lemonkitpvp.commands.bounty.CommandBounty;
 import dev.negativekb.lemonkitpvp.commands.clans.CommandClans;
+import dev.negativekb.lemonkitpvp.commands.crystals.CommandCrystals;
 import dev.negativekb.lemonkitpvp.commands.eco.CommandCoins;
 import dev.negativekb.lemonkitpvp.commands.kit.CommandKit;
 import dev.negativekb.lemonkitpvp.commands.kit.CommandViewKit;
@@ -10,6 +11,7 @@ import dev.negativekb.lemonkitpvp.commands.stats.CommandSetStats;
 import dev.negativekb.lemonkitpvp.commands.stats.CommandStats;
 import dev.negativekb.lemonkitpvp.core.api.gui.GUIListener;
 import dev.negativekb.lemonkitpvp.core.data.ClanManager;
+import dev.negativekb.lemonkitpvp.core.data.CrystalManager;
 import dev.negativekb.lemonkitpvp.core.data.KitPvPPlayerManager;
 import dev.negativekb.lemonkitpvp.core.impl.PlaceholderAPIImpl;
 import dev.negativekb.lemonkitpvp.core.kit.KitManager;
@@ -23,6 +25,7 @@ public class CoreInitializer {
         new KitPvPLevelManager();
         new KitPvPPlayerManager();
         new ClanManager();
+        new CrystalManager();
         new KitManager();
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
@@ -42,5 +45,6 @@ public class CoreInitializer {
         new CommandWhatKit();
         new CommandSetStats();
         new CommandStats();
+        new CommandCrystals();
     }
 }

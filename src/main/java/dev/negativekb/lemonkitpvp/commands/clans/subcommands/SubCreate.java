@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 public class SubCreate extends SubCommand {
 
     private final ClanManager manager;
+
     public SubCreate() {
         this.manager = ClanManager.getInstance();
     }

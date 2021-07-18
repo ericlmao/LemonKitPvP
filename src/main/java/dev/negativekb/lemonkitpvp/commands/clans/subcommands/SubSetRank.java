@@ -6,7 +6,6 @@ import dev.negativekb.lemonkitpvp.core.data.ClanManager;
 import dev.negativekb.lemonkitpvp.core.structure.clans.Clan;
 import dev.negativekb.lemonkitpvp.core.structure.clans.ClanRank;
 import dev.negativekb.lemonkitpvp.core.util.Message;
-import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;

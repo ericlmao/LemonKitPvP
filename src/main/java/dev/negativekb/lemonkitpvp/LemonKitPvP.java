@@ -2,11 +2,9 @@ package dev.negativekb.lemonkitpvp;
 
 import dev.negativekb.lemonkitpvp.core.CoreInitializer;
 import dev.negativekb.lemonkitpvp.core.data.ClanManager;
+import dev.negativekb.lemonkitpvp.core.data.CrystalManager;
 import dev.negativekb.lemonkitpvp.core.data.KitPvPPlayerManager;
-import dev.negativekb.lemonkitpvp.listeners.PlayerChatListener;
-import dev.negativekb.lemonkitpvp.listeners.PlayerDeathListener;
-import dev.negativekb.lemonkitpvp.listeners.PlayerDropListener;
-import dev.negativekb.lemonkitpvp.listeners.PlayerJoinListener;
+import dev.negativekb.lemonkitpvp.listeners.*;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -34,7 +32,8 @@ public final class LemonKitPvP extends JavaPlugin {
                 new PlayerDeathListener(),
                 new PlayerDropListener(),
                 new PlayerJoinListener(),
-                new PlayerChatListener()
+                new PlayerChatListener(),
+                new RefillCrystalListener()
         );
     }
 
@@ -44,6 +43,10 @@ public final class LemonKitPvP extends JavaPlugin {
         try {
             KitPvPPlayerManager.getInstance().save();
             ClanManager.getInstance().save();
+
+            CrystalManager crystalManager = CrystalManager.getInstance();
+            crystalManager.save();
+            crystalManager.removeCrystals();
         } catch (IOException e) {
             e.printStackTrace();
         }

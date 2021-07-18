@@ -6,7 +6,6 @@ import dev.negativekb.lemonkitpvp.core.api.command.Command;
 import dev.negativekb.lemonkitpvp.core.api.command.annotation.CommandInfo;
 import dev.negativekb.lemonkitpvp.core.util.Message;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.Collections;

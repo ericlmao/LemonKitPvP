@@ -11,12 +11,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.rmi.MarshalException;
-
 @CommandInfo(name = "kick", playerOnly = true)
 public class SubKick extends SubCommand {
 
     private final ClanManager manager;
+
     public SubKick() {
         manager = ClanManager.getInstance();
     }
