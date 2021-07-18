@@ -1,14 +1,17 @@
 package dev.negativekb.lemonkitpvp.listeners;
 
+import dev.negativekb.lemonkitpvp.core.data.ClanManager;
 import dev.negativekb.lemonkitpvp.core.data.KitPvPPlayerManager;
 import dev.negativekb.lemonkitpvp.core.managers.KitPvPLevelManager;
 import dev.negativekb.lemonkitpvp.core.structure.KitPvPPlayer;
+import dev.negativekb.lemonkitpvp.core.structure.clans.Clan;
 import dev.negativekb.lemonkitpvp.core.util.Message;
 import dev.negativekb.lemonkitpvp.core.util.UtilPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -54,8 +57,33 @@ public class PlayerDeathListener implements Listener {
         int amount = random.nextInt(25) + 1;
         attacker.setCoins(attacker.getCoins() + amount);
 
+        if (victim.getBounty() != 0) {
+            attacker.setCoins(attacker.getCoins() + victim.getBounty());
+            new Message("&c&l" + killer.getName() + " &ehas claimed a &6&l" +
+                    victim.getBounty() + " coin &ebounty on &c" + player.getName())
+                    .broadcast();
+            victim.setBounty(0);
+        }
+
         player.spigot().respawn();
         UtilPlayer.reset(player);
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player) && !(event.getDamager() instanceof Player))
+            return;
+
+        Player attacker = (Player) event.getDamager();
+        Player victim = (Player) event.getEntity();
+
+        Clan clan = ClanManager.getInstance().getClanByPlayer(attacker);
+        if (clan == null)
+            return;
+
+        if (clan.getMembers().containsKey(victim.getUniqueId()))
+            event.setDamage(event.getDamage() / 2);
+
     }
 
     private void checkLevel(KitPvPPlayer player) {

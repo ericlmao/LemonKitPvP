@@ -65,17 +65,17 @@ public class CommandStats extends Command {
                 " ",
                 "&f&m------------------------------"
         )
-        .replace("%kills%", kills)
-        .replace("%deaths%", deaths)
-        .replace("%kdr%", kdr)
-        .replace("%coins%", coins)
-        .replace("%bounty%", (bounty == 0 ? "No Bounty" : bounty))
-        .replace("%killstreak%", killStreak)
-        .replace("%best-killstreak%", bestKillStreak)
-        .replace("%level%", level)
-        .replace("%xp%", xp)
-        .replace("%required%", KitPvPLevelManager.getInstance().getRequiredExperience((level + 1)))
-        .replace("%kit%", (kit == null ? "None" : kit))
-        .send(player);
+                .replace("%kills%", kills)
+                .replace("%deaths%", deaths)
+                .replace("%kdr%", kdr)
+                .replace("%coins%", coins)
+                .replace("%bounty%", (bounty == 0 ? "No Bounty" : bounty))
+                .replace("%killstreak%", killStreak)
+                .replace("%best-killstreak%", bestKillStreak)
+                .replace("%level%", level)
+                .replace("%xp%", xp)
+                .replace("%required%", KitPvPLevelManager.getInstance().getRequiredExperience((level + 1)))
+                .replace("%kit%", (kit == null ? "None" : kit))
+                .send(player);
     }
 }

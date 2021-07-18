@@ -5,16 +5,12 @@ import dev.negativekb.lemonkitpvp.core.data.KitPvPPlayerManager;
 import dev.negativekb.lemonkitpvp.core.managers.KitPvPLevelManager;
 import dev.negativekb.lemonkitpvp.core.structure.KitPvPPlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
-public class PlaceholderAPIImpl extends PlaceholderExpansion  {
+public class PlaceholderAPIImpl extends PlaceholderExpansion {
     private final LemonKitPvP plugin;
 
     public PlaceholderAPIImpl() {

@@ -32,7 +32,7 @@ public class CommandViewKit extends Command {
         }
 
         Kit kit = KitManager.getInstance().getKitByString(args[0]);
-        if (kit ==  null) {
+        if (kit == null) {
             new Message("&cInvalid Kit!").send(sender);
             return;
         }

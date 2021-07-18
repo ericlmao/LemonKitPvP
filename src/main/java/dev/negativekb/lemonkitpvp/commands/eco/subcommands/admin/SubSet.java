@@ -10,7 +10,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
 @CommandInfo(name = "set", permission = "kitpvp.admin")
-public class SubSet  extends SubCommand {
+public class SubSet extends SubCommand {
     @Override
     public void runCommand(CommandSender sender, String[] args) {
         if (args.length < 2) {

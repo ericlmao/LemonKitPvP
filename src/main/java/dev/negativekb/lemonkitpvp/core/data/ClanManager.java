@@ -9,9 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.UUID;
+import java.util.*;
 
 public class ClanManager {
 
@@ -19,7 +17,8 @@ public class ClanManager {
     private static ClanManager instance;
     private final String dataPath;
     private final Gson gson;
-
+    @Getter
+    private final HashMap<Clan, ArrayList<UUID>> clanInvites = new HashMap<>();
     @Getter
     private ArrayList<Clan> clans = new ArrayList<>();
 
@@ -87,6 +86,56 @@ public class ClanManager {
 
     public void deleteClan(Clan clan) {
         clans.remove(clan);
+    }
+
+
+    public ArrayList<UUID> getInvites(Clan clan) {
+        Map.Entry<Clan, ArrayList<UUID>> entry = getClanInvites()
+                .entrySet()
+                .stream()
+                .filter(clanArrayListEntry -> clan.getName().equalsIgnoreCase(clanArrayListEntry.getKey().getName()))
+                .findFirst().orElse(null);
+        return (entry == null ? null : entry.getValue());
+    }
+
+    public boolean isInvited(UUID uuid, Clan clan) {
+        if (clanInvites.isEmpty() || !clanInvites.containsKey(clan))
+            return false;
+
+        UUID invite = getInvites(clan)
+                .stream()
+                .filter(uuid1 -> uuid1.equals(uuid))
+                .findFirst().orElse(null);
+        return (invite != null);
+    }
+
+    public void invite(UUID uuid, Clan clan) {
+        ArrayList<UUID> invites = (getInvites(clan) == null ? new ArrayList<>() : getInvites(clan));
+        invites.add(uuid);
+
+        if (clanInvites.containsKey(clan))
+            clanInvites.replace(clan, invites);
+        else
+            clanInvites.put(clan, invites);
+
+    }
+
+    public void removeInvite(UUID uuid, Clan clan) {
+        if (getInvites(clan) == null || !isInvited(uuid, clan))
+            return;
+
+        ArrayList<UUID> invites = getInvites(clan);
+        invites.remove(uuid);
+
+        if (invites.isEmpty()) {
+            clanInvites.remove(clan);
+            return;
+        }
+
+        if (clanInvites.containsKey(clan))
+            clanInvites.replace(clan, invites);
+        else
+            clanInvites.put(clan, invites);
     }
 
     private class Timer extends BukkitRunnable {

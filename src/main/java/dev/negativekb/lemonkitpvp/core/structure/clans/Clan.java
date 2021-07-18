@@ -1,5 +1,6 @@
 package dev.negativekb.lemonkitpvp.core.structure.clans;
 
+import dev.negativekb.lemonkitpvp.core.util.Message;
 import dev.negativekb.lemonkitpvp.core.util.RomanNumeral;
 import lombok.Data;
 import org.bukkit.Bukkit;
@@ -7,8 +8,10 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Data
 public class Clan {
@@ -44,6 +47,21 @@ public class Clan {
 
     public void setMemberRank(UUID uuid, ClanRank rank) {
         this.members.replace(uuid, rank.getName());
+    }
+
+    public ClanRank getMemberRank(UUID uuid) {
+        Map.Entry<UUID, String> entry = getMembers()
+                .entrySet()
+                .stream()
+                .filter(uuidStringEntry -> uuid.equals(uuidStringEntry.getKey()))
+                .findFirst().orElse(null);
+        return (entry == null ? null : ClanRank.getByString(entry.getValue()));
+    }
+
+    public void removeMember(UUID uuid) {
+        HashMap<UUID, String> members = getMembers();
+        members.remove(uuid);
+        setMembers(members);
     }
 
     public String getUpgradeDisplay(ClanUpgrade upgrade) {
@@ -101,5 +119,18 @@ public class Clan {
     public double getNextUpgradeCost(ClanUpgrade upgrade) {
         int next = getNextUpgradeLevel(upgrade);
         return upgrade.getCostPerLevel().get((next - 1));
+    }
+
+    public void sendAnnouncement(String message) {
+        List<Map.Entry<UUID, String>> onlineMembers = getMembers()
+                .entrySet()
+                .stream()
+                .filter(uuidStringEntry -> Bukkit.getPlayer(uuidStringEntry.getKey()) != null)
+                .collect(Collectors.toList());
+
+        onlineMembers.forEach(uuidStringEntry -> {
+            Player player = Bukkit.getPlayer(uuidStringEntry.getKey());
+            new Message("&b[Clan Announcement] &7" + message).send(player);
+        });
     }
 }

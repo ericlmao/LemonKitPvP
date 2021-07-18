@@ -1,6 +1,8 @@
 package dev.negativekb.lemonkitpvp;
 
 import dev.negativekb.lemonkitpvp.core.CoreInitializer;
+import dev.negativekb.lemonkitpvp.core.data.ClanManager;
+import dev.negativekb.lemonkitpvp.core.data.KitPvPPlayerManager;
 import dev.negativekb.lemonkitpvp.listeners.PlayerChatListener;
 import dev.negativekb.lemonkitpvp.listeners.PlayerDeathListener;
 import dev.negativekb.lemonkitpvp.listeners.PlayerDropListener;
@@ -11,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public final class LemonKitPvP extends JavaPlugin {
@@ -38,6 +41,12 @@ public final class LemonKitPvP extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        try {
+            KitPvPPlayerManager.getInstance().save();
+            ClanManager.getInstance().save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void registerListeners(Listener... listeners) {
